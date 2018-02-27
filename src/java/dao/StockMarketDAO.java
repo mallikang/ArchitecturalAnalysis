@@ -59,7 +59,8 @@ public class StockMarketDAO {
         return smList;
     }
 
-    public static StockMarket getStockMarket(int stockId) {
+    public static ArrayList<StockMarket> getStockMarketById(int stockId) {
+        ArrayList<StockMarket> toReturn = new ArrayList<>();
         try {
             conn = ConnectionManagerDatabase.getConnection();
             stmt = conn.prepareStatement(
@@ -79,8 +80,9 @@ public class StockMarketDAO {
                 double percentChange = rs.getDouble(7);
 
                 sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange);
+                toReturn.add(sm);
             }
-            return sm;
+            return toReturn;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

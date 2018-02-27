@@ -61,20 +61,21 @@ public class StockTradeDAO {
         }
         return stList;
     }
-    
-        public static StockTrade getStockTrade(String trader, int stockId) {
+
+    public static ArrayList<StockTrade> getStockTradeByTrader(String trader) {
+        ArrayList<StockTrade> toReturn = new ArrayList<>();
         try {
             conn = ConnectionManagerDatabase.getConnection();
             stmt = conn.prepareStatement(
                     "SELECT * FROM stock_trade WHERE "
-                    + "trader = ? " + "stockid = ?"
+                    + "trader = ? "
             );
             stmt.setString(1, trader);
-            stmt.setInt(2, stockId);
             rs = stmt.executeQuery();
-            
-           StockTrade st = null;
+
+            StockTrade st = null;
             while (rs.next()) {
+                int stockId = rs.getInt(2);
                 Date tradeTime = null;
                 Timestamp timestamp = rs.getTimestamp(3);
                 if (timestamp != null) {
@@ -85,8 +86,9 @@ public class StockTradeDAO {
                 int quantity = rs.getInt(6);
 
                 st = new StockTrade(trader, stockId, tradeTime, tradeType, price, quantity);
+                toReturn.add(st);
             }
-            return st;
+            return toReturn;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
