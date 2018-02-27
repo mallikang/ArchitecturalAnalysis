@@ -15,15 +15,15 @@ public class StockMarket {
     private String stockName;
     private String shortName;
     private double price;
-    private double change;
+    private double totalchange;
     private double percent_change;
 
-    public StockMarket(int stockId, String stockName, String shortName, double price, double change, double percent_change) {
+    public StockMarket(int stockId, String stockName, String shortName, double price, double totalchange, double percent_change) {
         this.stockId = stockId;
         this.stockName = stockName;
         this.shortName = shortName;
         this.price = price;
-        this.change = change;
+        this.totalchange = totalchange;
         this.percent_change = percent_change;
     }
 
@@ -59,12 +59,12 @@ public class StockMarket {
         this.price = price;
     }
 
-    public double getChange() {
-        return change;
+    public double getTotalChange() {
+        return totalchange;
     }
 
-    public void setChange(double change) {
-        this.change = change;
+    public void setTotalChange(double change) {
+        this.totalchange = change;
     }
 
     public double getPercent_change() {
