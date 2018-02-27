@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.StockMarketDAO;
 import dao.StockTradeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,14 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.StockMarket;
 import model.StockTrade;
 
 /**
  *
  * @author Adeline Chin
  */
-@WebServlet(name = "ViewResultsController", urlPatterns = {"/ViewResultsController"})
-public class ViewResultsController extends HttpServlet {
+@WebServlet(name = "ViewAllResultsController", urlPatterns = {"/ViewAllResultsController"})
+public class ViewAllResultsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +43,10 @@ public class ViewResultsController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewResultsController</title>");            
+            out.println("<title>Servlet ViewAllResultsController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewResultsController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewAllResultsController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,11 +79,18 @@ public class ViewResultsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String username = request.getParameter("username");
         HttpSession session = request.getSession();
-        ArrayList<StockTrade> stList = StockTradeDAO.getStockTradeByTrader(username);
-        session.setAttribute("stList", stList);
-        response.sendRedirect("viewresults.jsp");
+        
+        String sm = request.getParameter("sm");
+        if(sm!=null){
+            session.setAttribute("sm", sm);
+            response.sendRedirect("buyconfirmation.jsp");
+        }
+        
+        ArrayList<StockMarket> smList = StockMarketDAO.getAllStockMarkets();
+        session.setAttribute("smList", smList);
+        response.sendRedirect("viewallresults.jsp");
+        
     }
 
     /**

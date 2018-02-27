@@ -46,8 +46,13 @@ public class StockMarketDAO {
                 double sellprice = rs.getDouble(5);
                 double totalChange = rs.getDouble(6);
                 double percentChange = rs.getDouble(7);
+                Date tradeTime = null;
+                Timestamp timestamp = rs.getTimestamp(8);
+                if (timestamp != null) {
+                    tradeTime = new java.util.Date(timestamp.getTime());
+                }
 
-                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange);
+                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange,tradeTime);
                 smList.add(sm);
             }
             return smList;
@@ -59,15 +64,12 @@ public class StockMarketDAO {
         return smList;
     }
 
-    public static ArrayList<StockMarket> getStockMarketById(int stockId) {
-        ArrayList<StockMarket> toReturn = new ArrayList<>();
+    public static StockMarket getStockMarketById(int stockId) {
         try {
             conn = ConnectionManagerDatabase.getConnection();
             stmt = conn.prepareStatement(
-                    "SELECT * FROM stock_market WHERE "
-                    + "stockid = ?"
+                    "SELECT * FROM stock_market"
             );
-            stmt.setInt(1, stockId);
             rs = stmt.executeQuery();
 
             StockMarket sm = null;
@@ -78,11 +80,16 @@ public class StockMarketDAO {
                 double sellprice = rs.getDouble(5);
                 double totalChange = rs.getDouble(6);
                 double percentChange = rs.getDouble(7);
+                Date tradeTime = null;
+                Timestamp timestamp = rs.getTimestamp(8);
+                if (timestamp != null) {
+                    tradeTime = new java.util.Date(timestamp.getTime());
+                }
 
-                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange);
-                toReturn.add(sm);
+                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange, tradeTime);
+
             }
-            return toReturn;
+            return sm;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -90,5 +97,7 @@ public class StockMarketDAO {
         }
         return null;
     }
+    
+    
 
 }
