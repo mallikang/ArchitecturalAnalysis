@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.text.DateFormat;
+import java.util.Date;
 
 /**
  *
@@ -15,12 +15,12 @@ public class StockTrade {
     
     private String trader;
     private int stockId;
-    private DateFormat tradetime;
+    private Date tradetime;
     private String tradeType;
     private double price;
     private int quantity;
 
-    public StockTrade(String trader, int stockId, DateFormat tradetime, String tradeType, double price, int quantity) {
+    public StockTrade(String trader, int stockId, Date tradetime, String tradeType, double price, int quantity) {
         this.trader = trader;
         this.stockId = stockId;
         this.tradetime = tradetime;
@@ -45,11 +45,11 @@ public class StockTrade {
         this.stockId = stockId;
     }
 
-    public DateFormat getTradetime() {
+    public Date getTradetime() {
         return tradetime;
     }
 
-    public void setTradetime(DateFormat tradetime) {
+    public void setTradetime(Date tradetime) {
         this.tradetime = tradetime;
     }
 
