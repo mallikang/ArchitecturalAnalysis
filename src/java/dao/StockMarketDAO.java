@@ -42,11 +42,12 @@ public class StockMarketDAO {
                 int stockId = rs.getInt(1);
                 String stockName = rs.getString(2);
                 String shortName = rs.getString(3);
-                double price = rs.getDouble(4);
-                double totalChange = rs.getDouble(5);
-                double percentChange = rs.getDouble(6);
+                double buyprice = rs.getDouble(4);
+                double sellprice = rs.getDouble(5);
+                double totalChange = rs.getDouble(6);
+                double percentChange = rs.getDouble(7);
 
-                sm = new StockMarket(stockId, stockName, shortName, price, totalChange, percentChange);
+                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange);
                 smList.add(sm);
             }
             return smList;
@@ -72,11 +73,12 @@ public class StockMarketDAO {
             while (rs.next()) {
                 String stockName = rs.getString(2);
                 String shortName = rs.getString(3);
-                double price = rs.getDouble(4);
-                double totalChange = rs.getDouble(5);
-                double percentChange = rs.getDouble(6);
+                double buyprice = rs.getDouble(4);
+                double sellprice = rs.getDouble(5);
+                double totalChange = rs.getDouble(6);
+                double percentChange = rs.getDouble(7);
 
-                sm = new StockMarket(stockId, stockName, shortName, price, totalChange, percentChange);
+                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange);
             }
             return sm;
         } catch (SQLException e) {

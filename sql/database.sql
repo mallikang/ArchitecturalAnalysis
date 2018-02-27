@@ -13,7 +13,8 @@ create table stock_market(
 	stockid int not null,
 	stockname varchar (200) CHARACTER SET utf8 not null, # only lower, upper and spaces allowed
 	shortname varchar (200) CHARACTER SET utf8 not null, # only lower, upper and spaces allowed
-	price double not null,
+    buyprice double not null,
+	sellprice double not null,
 	total_change double not null,
 	percent_change double not null,
 	constraint stock_market_pk primary key (stockid)

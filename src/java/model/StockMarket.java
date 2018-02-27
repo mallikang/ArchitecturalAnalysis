@@ -14,15 +14,17 @@ public class StockMarket {
     private int stockId;
     private String stockName;
     private String shortName;
-    private double price;
+    private double buyPrice;
+    private double sellPrice;
     private double totalchange;
     private double percent_change;
 
-    public StockMarket(int stockId, String stockName, String shortName, double price, double totalchange, double percent_change) {
+    public StockMarket(int stockId, String stockName, String shortName, double buyPrice, double sellPrice, double totalchange, double percent_change) {
         this.stockId = stockId;
         this.stockName = stockName;
         this.shortName = shortName;
-        this.price = price;
+        this.buyPrice = buyPrice;
+        this.sellPrice = sellPrice;
         this.totalchange = totalchange;
         this.percent_change = percent_change;
     }
@@ -51,12 +53,20 @@ public class StockMarket {
         this.shortName = shortName;
     }
 
-    public double getPrice() {
-        return price;
+    public double getBuyPrice() {
+        return buyPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setBuyPrice(double buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+    
+     public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
     public double getTotalChange() {
