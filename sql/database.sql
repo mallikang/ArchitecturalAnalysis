@@ -14,7 +14,7 @@ create table stock_market(
 	stockname varchar (200) CHARACTER SET utf8 not null, # only lower, upper and spaces allowed
 	shortname varchar (200) CHARACTER SET utf8 not null, # only lower, upper and spaces allowed
 	price double not null,
-	change double not null,
+	total_change double not null,
 	percent_change double not null,
 	constraint stock_market_pk primary key (stockid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

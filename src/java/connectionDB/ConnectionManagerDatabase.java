@@ -41,13 +41,14 @@ public class ConnectionManagerDatabase {
       
             // grab environment variable to check if we are on production environment
             String username = System.getProperty("os.name");
-            if (username.equals("Linux")) {
-                // in production environment, use aws.db.password
-                dbPassword = props.getProperty("aws.db.password");
-            } else {
-                // in local environment, use db.password
-                dbPassword = props.getProperty("db.password");
-            }
+            dbPassword = props.getProperty("db.password");
+//            if (username.equals("Linux")) {
+//                // in production environment, use aws.db.password
+//                dbPassword = props.getProperty("aws.db.password");
+//            } else {
+//                // in local environment, use db.password
+//                dbPassword = props.getProperty("db.password");
+//            }
 
 
       dbURL = "jdbc:mysql://" + host + port + "/" + dbName;
