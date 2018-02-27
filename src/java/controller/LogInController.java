@@ -7,11 +7,14 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.TradeInfo;
 
 /**
  *
@@ -72,7 +75,20 @@ public class LogInController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String userID = request.getParameter("username");
+        String password = request.getParameter("password");
+        TradeInfoDAO tiDAO = new TradeInfoDAO();
+        TradeInfo trader = tiDAO.verify(userID, password);
+        //database connection for student
+
+        if (trader != null) {
+            response.sendRedirect("AdminMenu.jsp");
+        } else {
+            request.setAttribute("errorMsg", "Username/Password is incorrect");
+            RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+            view.include(request, response);
+        }
     }
 
     /**
