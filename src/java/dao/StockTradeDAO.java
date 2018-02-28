@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import model.StockMarket;
@@ -61,19 +62,55 @@ public class StockTradeDAO {
         }
         return stList;
     }
-    
-        public static StockTrade getStockTrade(String trader, int stockId) {
+
+    public static ArrayList<StockTrade> getStockTradeByTrader(String trader) {
+        ArrayList<StockTrade> toReturn = new ArrayList<>();
         try {
             conn = ConnectionManagerDatabase.getConnection();
             stmt = conn.prepareStatement(
                     "SELECT * FROM stock_trade WHERE "
-                    + "trader = ? " + "stockid = ?"
+                    + "trader = ? "
+            );
+            stmt.setString(1, trader);
+            rs = stmt.executeQuery();
+
+            StockTrade st = null;
+            while (rs.next()) {
+                int stockId = rs.getInt(2);
+                Date tradeTime = null;
+                Timestamp timestamp = rs.getTimestamp(3);
+                if (timestamp != null) {
+                    tradeTime = new java.util.Date(timestamp.getTime());
+                }
+                String tradeType = rs.getString(4);
+                double price = rs.getDouble(5);
+                int quantity = rs.getInt(6);
+
+                st = new StockTrade(trader, stockId, tradeTime, tradeType, price, quantity);
+                toReturn.add(st);
+            }
+            return toReturn;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManagerDatabase.close(conn, stmt, rs);
+        }
+        return null;
+    }
+    
+        public static ArrayList<StockTrade> getSpecificStockTradeByTrader(String trader, int stockId) {
+            ArrayList<StockTrade> toReturn = new ArrayList<>();
+        try {
+            conn = ConnectionManagerDatabase.getConnection();
+            stmt = conn.prepareStatement(
+                    "SELECT * FROM stock_trade WHERE "
+                    + "trader = ? AND" + "stockid = ?"
             );
             stmt.setString(1, trader);
             stmt.setInt(2, stockId);
             rs = stmt.executeQuery();
-            
-           StockTrade st = null;
+
+            StockTrade st = null;
             while (rs.next()) {
                 Date tradeTime = null;
                 Timestamp timestamp = rs.getTimestamp(3);
@@ -85,8 +122,9 @@ public class StockTradeDAO {
                 int quantity = rs.getInt(6);
 
                 st = new StockTrade(trader, stockId, tradeTime, tradeType, price, quantity);
+                toReturn.add(st);
             }
-            return st;
+            return toReturn;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -95,4 +133,42 @@ public class StockTradeDAO {
         return null;
     }
 
+    public static boolean addNewBuyStock(String trader, int stockId, double price, int quantity) {
+
+        try {
+            conn = ConnectionManagerDatabase.getConnection();
+            stmt = conn.prepareStatement("INSERT INTO stock_trade VALUES (?,?,?,?,?,?)");
+            stmt.setString(1, trader);
+            stmt.setInt(2, stockId);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            stmt.setString(3, df.format(new Date()));
+            stmt.setString(4, "Buy");
+            stmt.setDouble(5, price);
+            stmt.setInt(6, quantity);
+            return stmt.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManagerDatabase.close(conn, stmt, rs);
+        }
+        return false;
+    }
+    
+        public static boolean addNewSellStock(String trader, int stockId, double price, int quantity) {
+
+        try {
+            conn = ConnectionManagerDatabase.getConnection();
+            stmt = conn.prepareStatement("INSERT INTO stock_trade VALUES (?,?,?,?,?,?)");
+            stmt.setDouble(1, price);
+            stmt.setInt(2, quantity);
+            stmt.setString(3, trader);
+            stmt.setInt(4, stockId);
+            return stmt.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManagerDatabase.close(conn, stmt, rs);
+        }
+        return false;
+    }
 }

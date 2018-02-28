@@ -42,11 +42,17 @@ public class StockMarketDAO {
                 int stockId = rs.getInt(1);
                 String stockName = rs.getString(2);
                 String shortName = rs.getString(3);
-                double price = rs.getDouble(4);
-                double totalChange = rs.getDouble(5);
-                double percentChange = rs.getDouble(6);
+                double buyprice = rs.getDouble(4);
+                double sellprice = rs.getDouble(5);
+                double totalChange = rs.getDouble(6);
+                double percentChange = rs.getDouble(7);
+                Date tradeTime = null;
+                Timestamp timestamp = rs.getTimestamp(8);
+                if (timestamp != null) {
+                    tradeTime = new java.util.Date(timestamp.getTime());
+                }
 
-                sm = new StockMarket(stockId, stockName, shortName, price, totalChange, percentChange);
+                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange,tradeTime);
                 smList.add(sm);
             }
             return smList;
@@ -58,25 +64,30 @@ public class StockMarketDAO {
         return smList;
     }
 
-    public static StockMarket getStockMarket(int stockId) {
+    public static StockMarket getStockMarketById(int stockId) {
         try {
             conn = ConnectionManagerDatabase.getConnection();
             stmt = conn.prepareStatement(
-                    "SELECT * FROM stock_market WHERE "
-                    + "stockid = ?"
+                    "SELECT * FROM stock_market"
             );
-            stmt.setInt(1, stockId);
             rs = stmt.executeQuery();
 
             StockMarket sm = null;
             while (rs.next()) {
                 String stockName = rs.getString(2);
                 String shortName = rs.getString(3);
-                double price = rs.getDouble(4);
-                double totalChange = rs.getDouble(5);
-                double percentChange = rs.getDouble(6);
+                double buyprice = rs.getDouble(4);
+                double sellprice = rs.getDouble(5);
+                double totalChange = rs.getDouble(6);
+                double percentChange = rs.getDouble(7);
+                Date tradeTime = null;
+                Timestamp timestamp = rs.getTimestamp(8);
+                if (timestamp != null) {
+                    tradeTime = new java.util.Date(timestamp.getTime());
+                }
 
-                sm = new StockMarket(stockId, stockName, shortName, price, totalChange, percentChange);
+                sm = new StockMarket(stockId, stockName, shortName, buyprice, sellprice, totalChange, percentChange, tradeTime);
+
             }
             return sm;
         } catch (SQLException e) {
@@ -86,5 +97,7 @@ public class StockMarketDAO {
         }
         return null;
     }
+    
+    
 
 }

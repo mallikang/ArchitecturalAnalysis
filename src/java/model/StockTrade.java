@@ -45,11 +45,11 @@ public class StockTrade {
         this.stockId = stockId;
     }
 
-    public Date getTradetime() {
+    public Date getTradeTime() {
         return tradetime;
     }
 
-    public void setTradetime(Date tradetime) {
+    public void setTradeTime(Date tradetime) {
         this.tradetime = tradetime;
     }
 

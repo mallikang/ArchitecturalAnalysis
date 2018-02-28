@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Adeline Chin
@@ -14,17 +16,21 @@ public class StockMarket {
     private int stockId;
     private String stockName;
     private String shortName;
-    private double price;
+    private double buyPrice;
+    private double sellPrice;
     private double totalchange;
     private double percent_change;
+    private Date tradeTime;
 
-    public StockMarket(int stockId, String stockName, String shortName, double price, double totalchange, double percent_change) {
+    public StockMarket(int stockId, String stockName, String shortName, double buyPrice, double sellPrice, double totalchange, double percent_change, Date tradeTime) {
         this.stockId = stockId;
         this.stockName = stockName;
         this.shortName = shortName;
-        this.price = price;
+        this.buyPrice = buyPrice;
+        this.sellPrice = sellPrice;
         this.totalchange = totalchange;
         this.percent_change = percent_change;
+        this.tradeTime = tradeTime;
     }
 
     public int getStockId() {
@@ -51,12 +57,20 @@ public class StockMarket {
         this.shortName = shortName;
     }
 
-    public double getPrice() {
-        return price;
+    public double getBuyPrice() {
+        return buyPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setBuyPrice(double buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+    
+     public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
     public double getTotalChange() {
@@ -67,14 +81,20 @@ public class StockMarket {
         this.totalchange = change;
     }
 
-    public double getPercent_change() {
+    public double getPercentChange() {
         return percent_change;
     }
 
-    public void setPercent_change(double percent_change) {
+    public void setPercentChange(double percent_change) {
         this.percent_change = percent_change;
     }
     
-    
+    public Date getTradeTime() {
+        return tradeTime;
+    }
+
+    public void setTradeTime(Date tradeTime) {
+        this.tradeTime = tradeTime;
+    }
     
 }

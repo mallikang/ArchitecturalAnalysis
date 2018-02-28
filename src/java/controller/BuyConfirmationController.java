@@ -5,24 +5,23 @@
  */
 package controller;
 
+import dao.StockMarketDAO;
 import dao.StockTradeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.StockTrade;
+import model.StockMarket;
 
 /**
  *
  * @author Adeline Chin
  */
-@WebServlet(name = "ViewResultsController", urlPatterns = {"/ViewResultsController"})
-public class ViewResultsController extends HttpServlet {
+@WebServlet(name = "BuyConfirmationController", urlPatterns = {"/BuyConfirmationController"})
+public class BuyConfirmationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +40,10 @@ public class ViewResultsController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewResultsController</title>");            
+            out.println("<title>Servlet BuyConfirmationController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewResultsController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BuyConfirmationController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,11 +76,21 @@ public class ViewResultsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String username = request.getParameter("username");
-        HttpSession session = request.getSession();
-        ArrayList<StockTrade> stList = StockTradeDAO.getStockTradeByTrader(username);
-        session.setAttribute("stList", stList);
-        response.sendRedirect("viewresults.jsp");
+        String username = (String)request.getParameter("username");
+        String stockIdString = (String)request.getParameter("stockId");
+        int stockId = Integer.parseInt(stockIdString);
+        String quantity = (String)request.getParameter("quantity");
+        
+        if(username!=null && stockId!=0){
+            //update the stocktrader table
+            StockMarket sm = StockMarketDAO.getStockMarketById(stockId);
+            boolean buyStock = StockTradeDAO.addNewBuyStock(username, stockId, sm.getBuyPrice(), Integer.parseInt(quantity));
+            
+            if(buyStock==true){
+                //return to some page saying purchase confirm
+            }
+        }
+        
     }
 
     /**
