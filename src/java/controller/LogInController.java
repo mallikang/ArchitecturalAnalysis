@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.TradeInfoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.TradeInfo;
 
 /**
  *
@@ -79,10 +79,10 @@ public class LogInController extends HttpServlet {
         String userID = request.getParameter("username");
         String password = request.getParameter("password");
         TradeInfoDAO tiDAO = new TradeInfoDAO();
-        TradeInfo trader = tiDAO.verify(userID, password);
+        boolean isAuthentic = tiDAO.authenticate(userID, password);
         //database connection for student
 
-        if (trader != null) {
+        if (isAuthentic) {
             response.sendRedirect("AdminMenu.jsp");
         } else {
             request.setAttribute("errorMsg", "Username/Password is incorrect");
