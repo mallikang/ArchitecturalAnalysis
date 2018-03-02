@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  *
@@ -53,7 +55,6 @@ public class GluttonsBaySim {
             add("Customer Maureen");
         }
     };
-    
     public static Queue<String> courseCustomerQueue;
 
     /**
@@ -113,18 +114,32 @@ public class GluttonsBaySim {
             activeTables[customer] = new Table();
             activeCustomersNames[customer] = customerName;
             activeCustomers[customer] = new Customer(activeTables[customer], customerName);
-            for (int course = 0; course<COURSE_PER_PERSON; ++course) {
+            for (int course = 0; course < COURSE_PER_PERSON; ++course) {
                 String courseName = LIST_OF_COURSES[course];
                 courseCustomerQueue.add(courseName + "_" + customerName);
             }
         }
-        
-        //creating and initialising Chef objetcs
-        for(int chefs = 0; chefs <chefNo; chefs++){
-            Chef chef = new Chef(activeTables, CHEF_NAMES.get(chefs), activeCustomersNames);
-        }
-        
 
+        //Use ExecutorService to reduce overhead of creating and destroying threads
+        ExecutorService exec = Executors.newCachedThreadPool();
+
+        //creating and initialising Chef objetcs and thereafter submitting to executor pool
+        for (int chefs = 0; chefs < chefNo; chefs++) {
+            Chef chef = new Chef(activeTables, CHEF_NAMES.get(chefs), activeCustomersNames);
+            exec.submit(chef);
+        }
+
+        //creating and initialising Waiter objetcs and thereafter submitting to executor pool
+        for (int waiters = 0; waiters < waiter; waiters++) {
+            Waiter server = new Waiter(activeTables, WAITER_NAMES.get(waiters), activeCustomersNames);
+            exec.submit(server);
+        }
+
+        //creating and initialising Waiter objetcs and thereafter submitting to executor pool
+        for (Customer activeCustomer : activeCustomers) {
+            Customer customer = activeCustomer;
+            exec.submit(customer);
+        }
         /*if (ver.equals("Single-Threaded Version")) {
             
         } else {

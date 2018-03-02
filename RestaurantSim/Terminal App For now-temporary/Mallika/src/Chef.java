@@ -8,7 +8,7 @@
  *
  * @author Adeline Chin
  */
-public class Chef extends Thread {
+public class Chef implements Runnable{
 
     private final static int COOKING_TIME = 2000;
     private Table[] tables;
@@ -31,6 +31,11 @@ public class Chef extends Thread {
         } catch (InterruptedException e) {
         }
         return "Chef " + chefname + " has finished preparing " + course + " for " + customer;
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

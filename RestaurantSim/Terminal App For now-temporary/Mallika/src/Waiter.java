@@ -13,8 +13,7 @@ public class Waiter implements Runnable {
     private Table[] tables;
     private String waiterName;
     private String[] customerNames;
-    private String[][] courses;
-
+    
     /**
      * initializes the data members of the class
      *
@@ -25,11 +24,10 @@ public class Waiter implements Runnable {
      * this Waiter.(courses[i][j] has the j-th course for the i-th Customer of
      * this Waiter)
      */
-    public Waiter(Table[] tables, String waiterName, String[] customerNames, String[][] courses) {
+    public Waiter(Table[] tables, String waiterName, String[] customerNames) {
         this.tables = tables;
         this.waiterName = waiterName;
         this.customerNames = customerNames;
-        this.courses = courses;
     }
 
     /**
