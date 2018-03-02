@@ -1,33 +1,31 @@
+
 import java.util.Random;
 
 /**
  *
  * @author Jared Heidt
  */
-
 public class Waiter implements Runnable {
 
-    final static int NUM_COURSES = 3;
     private final static int MAX_CUSTOMER_MILLIS = 6000;// must wait for between 0-4 seconds
 
     private Table[] tables;
     private String waiterName;
     private String[] customerNames;
-    
+    private String[][] courses;
+
     /**
      * initializes the data members of the class
      *
      * @param tables array of Table objects this Waiter waits on
      * @param waiterName name of the waiter
      * @param customerNames names of Customers served by the Waiter
-     * @param courses multi-dimensional array of courses for each Customer of
-     * this Waiter.(courses[i][j] has the j-th course for the i-th Customer of
-     * this Waiter)
      */
-    public Waiter(Table[] tables, String waiterName, String[] customerNames) {
+    public Waiter(Table[] tables, String waiterName, String[] customerNames, String[][] courses) {
         this.tables = tables;
         this.waiterName = waiterName;
         this.customerNames = customerNames;
+        this.courses = courses;
     }
 
     /**
@@ -40,7 +38,7 @@ public class Waiter implements Runnable {
     public void run() {
         Random random = new Random();
 
-        for (int course = 0; course < NUM_COURSES; ++course) {
+        for (int course = 0; course < GluttonsBaySim.COURSE_PER_PERSON; ++course) {
 
             for (int customer = 0; customer < customerNames.length; ++customer) {
                 try {

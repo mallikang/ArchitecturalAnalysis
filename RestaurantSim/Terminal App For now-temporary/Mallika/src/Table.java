@@ -14,12 +14,21 @@ public class Table extends Thread {
 
     private String courseName = "";
     private boolean checkIfTableIsEmpty = true;
+    private final static int EAT_TIME = 6000;
 
     public Table() {
 
     }
 
-    public void serve(String course) {
+    public synchronized void serve(String course) {
+        //when there is still food on the table
+        while (!checkIfTableIsEmpty) {// wait while there is still a course on the table
+            try {
+                wait();
+            } catch (InterruptedException ie) {
+                System.err.println(ie.getMessage());
+            }
+        }
         this.checkIfTableIsEmpty = false;
         this.courseName = course;
     }
@@ -36,10 +45,12 @@ public class Table extends Thread {
         }
     }
 
-    public String eat() {
+    public synchronized String eat() {
+        Random random = new Random();
+
         if (checkIfTableIsEmpty) {
             //need 2 seconds to eat
-            delay(2000); //1000 = 1 second
+            delay(random.nextInt(EAT_TIME));
         }
         this.checkIfTableIsEmpty = true;
         return courseName;

@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
@@ -54,8 +55,7 @@ public class GluttonsBaySim {
             add("Customer Maxine");
             add("Customer Maureen");
         }
-    };
-    public static Queue<String> courseCustomerQueue;
+    }; 
 
     /**
      * @param args the command line arguments
@@ -106,8 +106,9 @@ public class GluttonsBaySim {
         Table[] activeTables = new Table[totalTables];
         Customer[] activeCustomers = new Customer[totalTables];
         String[] activeCustomersNames = new String[totalTables];
-        courseCustomerQueue = new LinkedList<>();
+        String[][] customersAndCourses = new String[COURSE_PER_PERSON][totalTables];
 
+        
         //creating and initialising tables, customers and Queue
         for (int customer = 0; customer < totalTables; ++customer) {
             String customerName = CUSTOMER_NAMES.get(customer);
@@ -115,8 +116,7 @@ public class GluttonsBaySim {
             activeCustomersNames[customer] = customerName;
             activeCustomers[customer] = new Customer(activeTables[customer], customerName);
             for (int course = 0; course < COURSE_PER_PERSON; ++course) {
-                String courseName = LIST_OF_COURSES[course];
-                courseCustomerQueue.add(courseName + "_" + customerName);
+                customersAndCourses[course][customer] = LIST_OF_COURSES[course] + "_" + customerName;
             }
         }
 
@@ -131,7 +131,7 @@ public class GluttonsBaySim {
 
         //creating and initialising Waiter objetcs and thereafter submitting to executor pool
         for (int waiters = 0; waiters < waiter; waiters++) {
-            Waiter server = new Waiter(activeTables, WAITER_NAMES.get(waiters), activeCustomersNames);
+            Waiter server = new Waiter(activeTables, WAITER_NAMES.get(waiters), activeCustomersNames, customersAndCourses);
             exec.submit(server);
         }
 

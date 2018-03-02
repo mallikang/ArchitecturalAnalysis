@@ -4,7 +4,7 @@
 public class Table {
 	private String course = "";// name of the course
 	private boolean isEmpty = true;// a flag used to see if the table is empty or is not empty (i.e., has an
-	// unfinished course)
+	// unfinished course
 
 	public Table() {
 
