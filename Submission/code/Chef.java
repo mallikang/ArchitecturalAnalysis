@@ -45,7 +45,7 @@ public class Chef implements Runnable {
             //chef takes specfic time to prepare food - extracted from COOK_TIME_COURSE
             int time = Main.COOK_TIME_COURSE.get(prepare.getCourseName());
             try {
-                Thread.sleep(random.nextInt(time));
+                Thread.sleep(time);
             } catch (InterruptedException e) {
                 System.out.println(e);
             }
