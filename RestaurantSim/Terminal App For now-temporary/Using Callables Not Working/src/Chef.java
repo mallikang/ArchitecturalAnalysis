@@ -1,5 +1,6 @@
 
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,9 +12,8 @@ import java.util.Random;
  * @author mallikang.2015
  */
 public class Chef implements Runnable {
-
     private String chefName;
-    private final boolean terminate = false;
+    private boolean terminate = false;
     private final Integer COOK_TIME = 4500;
 
     public Chef(String name) {
@@ -42,6 +42,9 @@ public class Chef implements Runnable {
                 Restaurant.ordersReady.offer(prepare);
             } catch (NullPointerException ex) {
                 System.out.println(ex);
+            }
+            if(Restaurant.complete){
+                terminate = true;
             }
         }
     }

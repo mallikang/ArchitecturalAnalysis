@@ -29,7 +29,8 @@ public class Main {
             add("Chef Cade");
         }
     };
-    public static final String[] LIST_OF_COURSES = {"Soup", "Salad", "Appetizer", "Main Course", "Dessert"};
+    public static final String[] LIST_OF_COURSES = {"Soup"};
+    //, "Salad", "Appetizer", "Main Course", "Dessert"
     private static final ArrayList<String> WAITER_NAMES = new ArrayList<String>() {
         {
             add("Waiter Brynn");
@@ -50,9 +51,7 @@ public class Main {
             add("Customer Maxine");
             add("Customer Maureen");
         }
-    }; 
-    
-    
+    };
 
     /**
      * @param args the command line arguments
@@ -64,47 +63,17 @@ public class Main {
 
         //Prints to the terminal window
         System.out.println("Welcome owner to the Gluttons Bay Restaurant Simulator!");
+        //System.out.println("Would you like to run the Subway simulation(Single-Threaded) or the Gluttons Bay Simulation(Multi-threaded)");
 
-        /*
-        //get all the numbers
-        System.out.println("Please enter the number of waiters employed (minimum 1, maximum 4): ");
-        int waiter = scanner.nextInt();
-        System.out.println("Please enter the number of chefs employed(minimum 2, maximum 3): ");
-        int chefNo = scanner.nextInt();
-        System.out.println("Please enter the number of tables that are fully occupied at a time: (minimum 5, maximum 9) ");
-        int totalTables = scanner.nextInt();
-        System.out.println("Note: We have some constraints, therefore values above maximum and below minimum will be converted respectively as written above!");
-        /**
-         * *
-         * System.out.println("\nWhat version would you like to run? \n Enter 1
-         * for Single Threaded \n Enter 2 for Multi-Threaded"); int version =
-         * scanner.nextInt(); if(version >= 2){ version = 2; } else{ version=1;
-         * } String ver = "Single-Threaded Version"; if(version==2){
-         * ver="Multi-Threaded Version"; } System.out.println("You have selected
-         * the " + ver + "!"); *
-         */
-        /*
-        //ensure numbers entered are appropriate
-        if (waiter < MIN_WAITERS) {
-            waiter = MIN_WAITERS;
-        } else if (waiter > MAX_WAITERS) {
-            waiter = MAX_WAITERS;
-        }
-        if (chefNo < MIN_CHEFS) {
-            chefNo = MIN_CHEFS;
-        } else if (chefNo > MAX_CHEFS) {
-            chefNo = MAX_CHEFS;
-        }
-        if (totalTables < MIN_TABLES) {
-            totalTables = MIN_TABLES;
-        } else if (totalTables > MAX_TABLES) {
-            totalTables = MAX_TABLES;
-        }
-        */
-        int totalTables = 4;
-        int chefNo = 1;
-        int waiter = 1;
+        //For version 1 and 2 chef and waiters is fixed
+        int chefNo = 2;
+        int waiter = 2;
         
+        //Dummy Comment out
+        //int version = 2;
+        //Get value from owner (maximum 9)
+        int totalTables = 3;
+
         String[] activeCustomers = new String[totalTables];
         String[] activeChefs = new String[chefNo];
         String[] activeWaiters = new String[waiter];
@@ -119,20 +88,21 @@ public class Main {
         }
         watch.start(); // start stopwatch  
         System.out.println("Stopwatch has started");
-        Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
-        r.startDay();
-        
-        /*
-        //COMMENT OUT
-        if (ver.equals("Single-Threaded Version")) {
-            
-        } else {
-            watch.start(); // start stopwatch                 
-        }
-        
-        */
-
-        System.out.println("Finished simulation after " + watch.toString());
+        //if (version == 2) {
+            System.out.println("Welcome to Gluttons Bay!");
+            Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
+            r.startDay();
+        //} else if (version == 1) {
+        //    System.out.println("Welcome to Subway!");
+        //}
+        System.out.println("The day lasted " + watch.toString());
+        //In a multi-threaded version, the process is still running, despite
+        //setting the while loops within Waiter and Chef to end. As the 
+        //Thread.stop() method has deprecated, there is no way to forcefully end 
+        //the process apart from the next line. I have not been able to identify
+        // any other reason for this program to keep running, therefore, to 
+        //overcome this I have used the following line:
+        System.exit(0);
     }
 
 }

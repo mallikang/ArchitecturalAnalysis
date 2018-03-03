@@ -7,9 +7,8 @@ import java.util.concurrent.TimeUnit;
  * @author mallikang.2015
  */
 public class Waiter implements Runnable {
-
     private String waiterName;
-    private final boolean terminate = false;
+    private boolean terminate = false;
     private final Integer SERVE_TIME = 3000;
 
     public Waiter(String name) {
@@ -28,7 +27,7 @@ public class Waiter implements Runnable {
                 System.out.println(ex);
             }
             if (serve != null) {
-                System.out.println(waiterName + " is now serving" + serve.getCourseName() + " to " + serve.getCustomerName());
+                System.out.println(waiterName + " is now serving " + serve.getCourseName() + " to " + serve.getCustomerName());
 
                 //waiter takes upto 3 seconds to serve the food
                 try {
@@ -37,10 +36,10 @@ public class Waiter implements Runnable {
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
-                System.out.println(waiterName + " has finished serving" + serve.getCourseName() + " to " + serve.getCustomerName());
+                System.out.println(waiterName + " has finished serving " + serve.getCourseName() + " to " + serve.getCustomerName());
             }
             try {
-                order = Restaurant.ordersReady.poll(2, TimeUnit.SECONDS);
+                order = Restaurant.customersOrder.poll(2, TimeUnit.SECONDS);
             } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
@@ -58,6 +57,9 @@ public class Waiter implements Runnable {
                     System.out.println(ex);
                 }
                 System.out.println(waiterName + " has placed the order for " + order.getCourseName() + " from " + order.getCustomerName());
+            }
+            if(Restaurant.complete){
+                terminate = true;
             }
         }
     }
