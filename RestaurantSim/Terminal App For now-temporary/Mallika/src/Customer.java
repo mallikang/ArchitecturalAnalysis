@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author Adeline Chin
  */
-public class Customer extends Thread {
+public class Customer implements Runnable{
 
     //2 seconds to eat
     private final static int EAT_TIME = 2000;
@@ -34,7 +34,7 @@ public class Customer extends Thread {
                 try {
                     placed = Restaurant.customersOrder.offer(newOrder, 2, TimeUnit.SECONDS);
                 } catch (NullPointerException ex) {
-                    Logger.getLogger(Waiter.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -48,11 +48,10 @@ public class Customer extends Thread {
                 try {
                     Thread.sleep(random.nextInt(EAT_TIME));
                 } catch (InterruptedException e) {
-                    Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
                 }
                 System.out.println(customerName + " has finished eating " + courseName);
             }
         }
     }
-
 }
