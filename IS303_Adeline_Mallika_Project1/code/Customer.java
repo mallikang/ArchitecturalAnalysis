@@ -36,8 +36,6 @@ public class Customer implements Callable<String> {
                     canPlace = Restaurant.customersOrder.offer(newOrder);
                 } catch (NullPointerException ex) {
                     System.out.println(ex);
-                } catch (InterruptedException ex) {
-                    System.out.println(ex);
                 }
                 if (canPlace) {
                     canPlace = false;
