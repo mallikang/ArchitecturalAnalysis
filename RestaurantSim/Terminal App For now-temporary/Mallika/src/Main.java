@@ -7,8 +7,6 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  *
@@ -116,46 +114,9 @@ public class Main {
         watch.start(); // start stopwatch  
         System.out.println("Stopwatch has started");
         Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
+        r.startDay();
         
         /*
-        Table[] activeTables = new Table[totalTables];
-        Customer[] activeCustomers = new Customer[totalTables];
-        String[] activeCustomersNames = new String[totalTables];
-        String[][] customersAndCourses = new String[COURSE_PER_PERSON][totalTables];
-
-        
-        //creating and initialising tables, customers and Queue
-        for (int customer = 0; customer < totalTables; ++customer) {
-            String customerName = CUSTOMER_NAMES.get(customer);
-            activeTables[customer] = new Table();
-            activeCustomersNames[customer] = customerName;
-            activeCustomers[customer] = new Customer(activeTables[customer], customerName);
-            for (int course = 0; course < COURSE_PER_PERSON; ++course) {
-                customersAndCourses[course][customer] = LIST_OF_COURSES[course] + "_" + customerName;
-            }
-        }
-
-        //Use ExecutorService to reduce overhead of creating and destroying threads
-        ExecutorService exec = Executors.newCachedThreadPool();
-
-        //creating and initialising Chef objetcs and thereafter submitting to executor pool
-        for (int chefs = 0; chefs < chefNo; chefs++) {
-            Chef chef = new Chef(activeTables, CHEF_NAMES.get(chefs), activeCustomersNames);
-            exec.submit(chef);
-        }
-
-        //creating and initialising Waiter objetcs and thereafter submitting to executor pool
-        for (int waiters = 0; waiters < waiter; waiters++) {
-            Waiter server = new Waiter(activeTables, WAITER_NAMES.get(waiters), activeCustomersNames, customersAndCourses);
-            exec.submit(server);
-        }
-
-        //creating and initialising Waiter objetcs and thereafter submitting to executor pool
-        for (Customer activeCustomer : activeCustomers) {
-            Customer customer = activeCustomer;
-            exec.submit(customer);
-        }
-        
         //COMMENT OUT
         if (ver.equals("Single-Threaded Version")) {
             

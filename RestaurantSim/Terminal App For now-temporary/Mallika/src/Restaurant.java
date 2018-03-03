@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,6 +32,27 @@ public class Restaurant {
         this.ordersSubmitted = new ArrayBlockingQueue(chefs.length * 2); //Can only hold up to twice the number of chefs on the job
         this.customersOrder = new ArrayBlockingQueue(customers.length); //Can only hold up to as many customers as are present in the restaurant
     }
-    
-    
+
+    public void startDay() {
+        ExecutorService exec = Executors.newCachedThreadPool();
+        //creating and initialising Customer objetcs and thereafter submitting to executor pool
+        for (String customer : customers) {
+            Customer newCustomer = new Customer(customer);
+            exec.submit(newCustomer);
+        }
+
+        //creating and initialising Waiter objetcs and thereafter submitting to executor pool
+        for (String waiter : waiters) {
+            Waiter newWaiter = new Waiter(waiter);
+            exec.submit(newWaiter);
+        }
+
+        //creating and initialising Waiter objetcs and thereafter submitting to executor pool
+        for (String chef : chefs) {
+            Chef newChef = new Chef(chef);
+            exec.submit(newChef);
+        }
+        
+        exec.shutdown();
+    }
 }

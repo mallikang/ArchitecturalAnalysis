@@ -26,7 +26,8 @@ public class Customer implements Runnable{
     @Override
     public void run() {
         Random random = new Random();
-        for (int i = 0; i < Main.LIST_OF_COURSES.length; i++) {
+        int i = 0;
+        while(i<Main.LIST_OF_COURSES.length){
             String courseName = Main.LIST_OF_COURSES[i];
             Dish newOrder = new Dish(courseName, customerName);
             boolean placed = false;
@@ -51,6 +52,7 @@ public class Customer implements Runnable{
                     Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
                 }
                 System.out.println(customerName + " has finished eating " + courseName);
+                i++;
             }
         }
     }
