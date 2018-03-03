@@ -5,8 +5,6 @@
  */
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -34,9 +32,9 @@ public class Customer implements Runnable {
             try {
                 placed = Restaurant.customersOrder.offer(newOrder, 2, TimeUnit.SECONDS);
             } catch (NullPointerException ex) {
-                Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
             if (placed) {
                 System.out.println(customerName + " is ready to order " + courseName);
@@ -50,13 +48,13 @@ public class Customer implements Runnable {
                         Restaurant.customersServed.take();
                         Thread.sleep(random.nextInt(EAT_TIME));
                     } catch (InterruptedException e) {
-                        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, e);
+                       System.out.println(e);
                     }
                     System.out.println(customerName + " has finished eating " + courseName);
                     i++;
                 }
             } catch (NullPointerException ex) {
-                Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+               System.out.println(ex);
             }
         }
     }

@@ -36,6 +36,7 @@ public class Restaurant {
     }
 
     public void startDay() {
+        /*
         ExecutorService exec = Executors.newCachedThreadPool();
         //creating and initialising Customer objetcs and thereafter submitting to executor pool
         for (String customer : customers) {
@@ -56,5 +57,20 @@ public class Restaurant {
         }
         
         exec.shutdown();
+        */
+        
+        Thread waiter = new Thread(new Waiter(waiters.get(0)));
+        Thread chef = new Thread(new Chef(chefs.get(0)));
+        Thread customer = new Thread(new Customer(customers.get(0)));
+        
+        chef.start();
+        waiter.start();
+        customer.start();
+        try{
+            customer.join();
+        }catch(InterruptedException e){
+            System.out.println(e);
+        }
+        
     }
 }

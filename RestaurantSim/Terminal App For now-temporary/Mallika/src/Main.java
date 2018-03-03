@@ -65,6 +65,7 @@ public class Main {
         //Prints to the terminal window
         System.out.println("Welcome owner to the Gluttons Bay Restaurant Simulator!");
 
+        /*
         //get all the numbers
         System.out.println("Please enter the number of waiters employed (minimum 1, maximum 4): ");
         int waiter = scanner.nextInt();
@@ -82,6 +83,7 @@ public class Main {
          * ver="Multi-Threaded Version"; } System.out.println("You have selected
          * the " + ver + "!"); *
          */
+        /*
         //ensure numbers entered are appropriate
         if (waiter < MIN_WAITERS) {
             waiter = MIN_WAITERS;
@@ -98,6 +100,10 @@ public class Main {
         } else if (totalTables > MAX_TABLES) {
             totalTables = MAX_TABLES;
         }
+        */
+        int totalTables = 1;
+        int chefNo = 1;
+        int waiter = 1;
         
         String[] activeCustomers = new String[totalTables];
         String[] activeChefs = new String[chefNo];
