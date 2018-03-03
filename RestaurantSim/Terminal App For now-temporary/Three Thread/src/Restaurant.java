@@ -62,16 +62,21 @@ public class Restaurant {
         
         Thread waiter = new Thread(new Waiter(waiters.get(0)));
         Thread chef = new Thread(new Chef(chefs.get(0)));
-        Thread customer = new Thread(new Customer(customers.get(0)));
+        Thread customer1 = new Thread(new Customer(customers.get(0)));
+        Thread customer2 = new Thread(new Customer(customers.get(1)));
+        Thread customer3 = new Thread(new Customer(customers.get(2)));
         
         chef.start();
         waiter.start();
-        customer.start();
+        customer1.start();
+        customer2.start();
+        customer3.start();
         try{
-            customer.join();
+            customer1.join();
+            customer2.join();
+            customer3.join();
         }catch(InterruptedException e){
             System.out.println(e);
         }
-        
     }
 }

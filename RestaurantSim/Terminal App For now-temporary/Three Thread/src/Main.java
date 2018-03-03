@@ -71,7 +71,7 @@ public class Main {
         //Dummy Comment out
         int version = 2;
         //Get value from owner (maximum 9)
-        int totalTables = 1;
+        int totalTables = 3;
 
         String[] activeCustomers = new String[totalTables];
         String[] activeChefs = new String[chefNo];
