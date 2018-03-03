@@ -22,6 +22,7 @@ public class Main {
     private static final int MAX_TABLES = 15;
     public static final String CHEF_NAME = "Chef Cabe";
     public static final String[] LIST_OF_COURSES = {"Soup", "Salad", "Appetizer", "Main Course", "Dessert"};
+	//maps course to cook time in milli seconds
     public static final HashMap<String, Integer> COOK_TIME_COURSE = new HashMap<>();
     static {
         COOK_TIME_COURSE.put("Soup", 500);
@@ -79,7 +80,7 @@ public class Main {
         System.out.println("Welcome owner to the Gluttons Bay Restaurant Simulator!");
         System.out.println("Would you like to run the Subway simulation(Single-Threaded)[Enter 1] or the Gluttons Bay Simulation(Multi-threaded)[Enter 2]?");
         int version = scanner.nextInt();
-        System.out.println("How many customers would you like to service today? [maximum 9]");
+        System.out.println("How many customers would you like to service today? [maximum 15]");
         int totalTables = scanner.nextInt();
 
         if (totalTables > MAX_TABLES) {
