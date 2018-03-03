@@ -16,29 +16,11 @@ public class Main {
 
     //Number of courses per person
     public static final int COURSE_PER_PERSON = 5;
-    private static final int MIN_WAITERS = 1;
-    private static final int MIN_CHEFS = 2;
-    private static final int MIN_TABLES = 5;
-    private static final int MAX_WAITERS = 4;
-    private static final int MAX_CHEFS = 3;
+    private static final int MIN_TABLES = 1;
     private static final int MAX_TABLES = 9;
-    private static final ArrayList<String> CHEF_NAMES = new ArrayList<String>() {
-        {
-            add("Chef Cabe");
-            add("Chef Caige");
-            add("Chef Cade");
-        }
-    };
-    public static final String[] LIST_OF_COURSES = {"Soup"};
-    //, "Salad", "Appetizer", "Main Course", "Dessert"
-    private static final ArrayList<String> WAITER_NAMES = new ArrayList<String>() {
-        {
-            add("Waiter Brynn");
-            add("Waiter Flynn");
-            add("Waiter Quinn");
-            add("Waiter Lynn");
-        }
-    };
+    public static final String CHEF_NAME = "Chef Cabe";
+    public static final String[] LIST_OF_COURSES = {"Soup", "Salad", "Appetizer", "Main Course", "Dessert"};
+    public static final String WAITER_NAME = "Waiter Flynn";
     private static final ArrayList<String> CUSTOMER_NAMES = new ArrayList<String>() {
         {
             add("Customer Pauline");
@@ -52,6 +34,22 @@ public class Main {
             add("Customer Maureen");
         }
     };
+    //For future Expansion - not used yet
+    private static final ArrayList<String> CHEF_NAMES = new ArrayList<String>() {
+        {
+            add("Chef Cabe");
+            add("Chef Caige");
+            add("Chef Cade");
+        }
+    };
+    private static final ArrayList<String> WAITER_NAMES = new ArrayList<String>() {
+        {
+            add("Waiter Brynn");
+            add("Waiter Flynn");
+            add("Waiter Quinn");
+            add("Waiter Lynn");
+        }
+    };
 
     /**
      * @param args the command line arguments
@@ -63,39 +61,39 @@ public class Main {
 
         //Prints to the terminal window
         System.out.println("Welcome owner to the Gluttons Bay Restaurant Simulator!");
-        //System.out.println("Would you like to run the Subway simulation(Single-Threaded) or the Gluttons Bay Simulation(Multi-threaded)");
+        System.out.println("Would you like to run the Subway simulation(Single-Threaded)[Enter 1] or the Gluttons Bay Simulation(Multi-threaded)[Enter 2]?");
+        int version = scanner.nextInt();
+        System.out.println("How many customers would you like to service today? [maximum 9]");
+        int totalTables = scanner.nextInt();
 
-        //For version 1 and 2 chef and waiters is fixed
-        int chefNo = 2;
-        int waiter = 2;
-        
-        //Dummy Comment out
-        //int version = 2;
-        //Get value from owner (maximum 9)
-        int totalTables = 3;
+        if (totalTables > MAX_TABLES) {
+            totalTables = 9;
+        } else if (totalTables < MIN_TABLES) {
+            totalTables = 1;
+        }
 
+        //For version 1 and 2 chef and waiter is fixed
         String[] activeCustomers = new String[totalTables];
-        String[] activeChefs = new String[chefNo];
-        String[] activeWaiters = new String[waiter];
+
         for (int customer = 0; customer < totalTables; ++customer) {
             activeCustomers[customer] = CUSTOMER_NAMES.get(customer);
         }
-        for (int chef = 0; chef < chefNo; ++chef) {
-            activeChefs[chef] = CHEF_NAMES.get(chef);
-        }
-        for (int waiterIndex = 0; waiterIndex < waiter; ++waiterIndex) {
-            activeWaiters[waiterIndex] = WAITER_NAMES.get(waiterIndex);
-        }
-        watch.start(); // start stopwatch  
-        System.out.println("Stopwatch has started");
-        //if (version == 2) {
+        String company = "";
+        if (version == 2) {
             System.out.println("Welcome to Gluttons Bay!");
-            Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
+            Restaurant r = new Restaurant(activeCustomers);
+            watch.start(); // start stopwatch  
+            System.out.println("Stopwatch has started");
             r.startDay();
-        //} else if (version == 1) {
-        //    System.out.println("Welcome to Subway!");
-        //}
-        System.out.println("The day lasted " + watch.toString());
+            company = "Gluttons Bay";
+        } else if (version == 1) {
+            System.out.println("Welcome to Subway!");
+            company = "Subway";
+            watch.start(); // start stopwatch  
+            System.out.println("Stopwatch has started");
+
+        }
+        System.out.println("The day at " + company + " lasted " + watch.toString());
         //In a multi-threaded version, the process is still running, despite
         //setting the while loops within Waiter and Chef to end. As the 
         //Thread.stop() method has deprecated, there is no way to forcefully end 

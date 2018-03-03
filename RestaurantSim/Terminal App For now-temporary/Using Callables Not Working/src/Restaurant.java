@@ -27,24 +27,21 @@ public class Restaurant {
     public static BlockingQueue<Dish> ordersSubmitted; //For Chef to work on new order that is submitted by Waiter
     public static BlockingQueue<Dish> customersOrder; //For customers waiting to place their orders
     public static LinkedBlockingDeque<Dish> customersServed; //For customers waiting to place their orders
-    private ArrayList<String> waiters;
-    private ArrayList<String> chefs;
     private ArrayList<String> customers;
     public static boolean complete = false;
 
-    public Restaurant(String[] waiters, String[] chefs, String[] customers) {
-        this.waiters = new ArrayList<>(Arrays.asList(waiters));
-        this.chefs = new ArrayList<>(Arrays.asList(chefs));
+    public Restaurant(String[] customers) {
         this.customers = new ArrayList<>(Arrays.asList(customers));
-        this.ordersReady = new ArrayBlockingQueue(waiters.length * 2); //Can only hold up to twice the number of waiters on the job
-        this.ordersSubmitted = new ArrayBlockingQueue(chefs.length * 2); //Can only hold up to twice the number of chefs on the job
+        //These numbers are to be increased upon expansion to more chefs and waiters
+        this.ordersReady = new ArrayBlockingQueue(2); //Can only hold up to twice the number of waiters on the job
+        this.ordersSubmitted = new ArrayBlockingQueue(2); //Can only hold up to twice the number of chefs on the job
         this.customersOrder = new ArrayBlockingQueue(customers.length); //Can only hold up to as many customers as are present in the restaurant
-        this.customersServed = new LinkedBlockingDeque(waiters.length * 2); //Can only hold up to twice the number of chefs who are serving
+        this.customersServed = new LinkedBlockingDeque(2); //Can only hold up to twice the number of chefs who are serving
     }
 
     public void startDay() {
-        Thread waiter = new Thread(new Waiter(waiters.get(0)));
-        Thread chef = new Thread(new Chef(chefs.get(0)));
+        Thread waiter = new Thread(new Waiter(Main.WAITER_NAME));
+        Thread chef = new Thread(new Chef(Main.CHEF_NAME));
         
         ExecutorService customerService = Executors.newCachedThreadPool();
         List<Customer> execList = new ArrayList<>();
