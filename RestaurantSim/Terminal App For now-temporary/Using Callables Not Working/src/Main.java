@@ -6,6 +6,7 @@
 //package gluttonsbaysim;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -20,6 +21,14 @@ public class Main {
     private static final int MAX_TABLES = 9;
     public static final String CHEF_NAME = "Chef Cabe";
     public static final String[] LIST_OF_COURSES = {"Soup", "Salad", "Appetizer", "Main Course", "Dessert"};
+    public static final HashMap<String, Integer> COOK_TIME_COURSE = new HashMap<>();
+    static {
+        COOK_TIME_COURSE.put("Soup", 500);
+        COOK_TIME_COURSE.put("Salad", 1000);
+        COOK_TIME_COURSE.put("Appetizer", 1000);
+        COOK_TIME_COURSE.put("Main Course", 2000);
+        COOK_TIME_COURSE.put("Dessert", 1500);
+    }
     public static final String WAITER_NAME = "Waiter Flynn";
     private static final ArrayList<String> CUSTOMER_NAMES = new ArrayList<String>() {
         {
