@@ -5,8 +5,8 @@ import java.util.Random;
  *
  * @author Jared Heidt
  */
-public class Waiter implements Runnable {
-
+public class Waiter{
+/*
     private final static int MAX_CUSTOMER_MILLIS = 6000;// must wait for between 0-4 seconds
 
     private Table[] tables;
@@ -21,7 +21,7 @@ public class Waiter implements Runnable {
      * @param waiterName name of the waiter
      * @param customerNames names of Customers served by the Waiter
      */
-    public Waiter(Table[] tables, String waiterName, String[] customerNames, String[][] courses) {
+/*    public Waiter(Table[] tables, String waiterName, String[] customerNames, String[][] courses) {
         this.tables = tables;
         this.waiterName = waiterName;
         this.customerNames = customerNames;
@@ -35,32 +35,19 @@ public class Waiter implements Runnable {
      * and sleeps for a random time between 0 & 4 seconds to mimic time taken in
      * serving.
      */
-    public void run() {
-        Random random = new Random();
-
-        for (int course = 0; course < GluttonsBaySim.COURSE_PER_PERSON; ++course) {
-
-            for (int customer = 0; customer < customerNames.length; ++customer) {
-                try {
-                    System.out.println(this.waiterName + " is serving " + customerNames[customer] + ": "
-                            + courses[course][customer]);
-
-                    tables[customer].serve(courses[course][customer]);
-
-                    try {
-                        Thread.sleep(random.nextInt(MAX_CUSTOMER_MILLIS));
-                    } catch (InterruptedException e) {
-                    }
-                } catch (NullPointerException npe) {
-                    System.err.println("Null message: " + npe.getMessage());
-                }
-            }
+/*    public void makeServe() throws InterruptedException {
+        synchronized (r) {
+            r.notifyAll();
+            while(r.orderMadeByClient==false)
+                r.wait();
+            System.out.println("Start serving order ");
+            Thread.sleep(1000);
+            r.putOrder(r.getOrderMadeByClient());
+            while(r.orderReady==false)
+                r.wait();
+            r.putOrderReceived(r.getFood());   
+            System.out.println("End serving order ");
         }
-
-        for (int index = 0; index < tables.length; ++index) {
-            tables[index].serve("DONE");
-        }
-        System.out.println("DONE");
-    }
+    }*/
 
 }

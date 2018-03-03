@@ -1,103 +1,54 @@
+
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Adeline Chin
  */
-public class Chef implements Runnable{
+public class Chef implements Runnable {
 
-    private final static int COOKING_TIME = 2000;
-    private Table[] tables;
     private String chefName;
-    private String[] customerNames;
-   
-    public Chef(Table[] tables, String chefName, String[] customerNames){
-        this.tables = tables;
-        this.chefName = chefName;
-        this.customerNames = customerNames;
-    }
-    
-    public String startCookCourse(String chefname, String customer, String course) {
-        return "Chef " + chefname + " is now preparing " + course + " for " + customer;
-    }
-    
-    public String cookCourse(String chefname, String customer, String course) {
-        try {
-            Thread.sleep(COOKING_TIME);
-        } catch (InterruptedException e) {
-        }
-        return "Chef " + chefname + " has finished preparing " + course + " for " + customer;
-    }
+    private boolean terminate = false;
+    private final Integer COOK_TIME = 4500;
 
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-}
-
-/*
-
-    private Queue<String> cook_queue;
-    private Table[] tables;
-    private String chefName;
-    private String[] customerNames;
-    private String[][] courses;
-    private int waiterNum;
-
-    public Chef(Table[] tables, String chefName, String[] customerNames, String[][] courses, int waiterNum) {
-        cook_queue = new LinkedList<String>();
-        for (int i = 0; i < customerNames.length; i++) {
-            for (int j = 0; j < courses.length; j++) {
-                String temp = "" + customerNames[i] + "_" + courses[j];
-                cook_queue.add(temp);
-            }
-        }
-        this.tables = tables;
-        this.chefName = chefName;
-        this.customerNames = customerNames;
-        this.courses = courses;
-        this.waiterNum = waiterNum;
+    public Chef(String name, boolean terminate) {
+        this.chefName = name;
     }
 
     @Override
     public void run() {
         Random random = new Random();
-        int checkpoint = 0;
-        
-        
-        for (int course = 0; course < courses.length; course++) {
-
-            for (int customer = 0; customer < customerNames.length; customer++) {
-                //assign waiter
-                if (checkpoint < waiterNum) {
-                    checkpoint++;
-                } else {
-                    checkpoint = 0;
-                }
-
-                System.out.println("Chef " + this.chefName + " is cooking "
-                        + courses[course][customer]);
-                //tables[customer].cook(courses[course][customer]);
-
-                //alternate the waiter
-                System.out.println("Waiter " + checkpoint + " is serving Customer " + customerNames[customer] + ": "
-                        + courses[course][customer]);
-                tables[customer].serve(courses[course][customer]);
-
-                try {
-                    Thread.sleep(random.nextInt(COOKING_TIME));
-                } catch (InterruptedException e) {
-                }
-
+        Dish prepare = null;
+        while (!terminate) {
+            try {
+                prepare = Restaurant.ordersSubmitted.take();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(chefName + " is now preparing " + Dish.getCourseName() + " for " + Dish.getCustomerName());
+            //chef waits for anywhere between 2 to 4.5 seconds to prepare the food
+            try {
+                Thread.sleep(random.nextInt(COOK_TIME));
+            } catch (InterruptedException e) {
+                Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, e);
+            }
+            System.out.println(chefName + " has finished preparing " + Dish.getCourseName() + " for " + Dish.getCustomerName());
+            try {
+                Restaurant.ordersReady.offer(prepare);
+            } catch (NullPointerException ex) {
+                Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        for (int no = 0; no < tables.length; no++) {
-            tables[no].cook("Finish");
-        }
-        System.out.println("Finish");
-}*/
+    }
+    
+    public void setTerminate(boolean terminate){
+        this.terminate = terminate;
+    }
+}

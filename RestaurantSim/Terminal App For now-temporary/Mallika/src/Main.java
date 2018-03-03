@@ -6,18 +6,15 @@
 //package gluttonsbaysim;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
  * @author mallikang.2015
  */
-public class GluttonsBaySim {
+public class Main {
 
     //Number of courses per person
     public static final int COURSE_PER_PERSON = 5;
@@ -56,6 +53,8 @@ public class GluttonsBaySim {
             add("Customer Maureen");
         }
     }; 
+    
+    
 
     /**
      * @param args the command line arguments
@@ -101,8 +100,24 @@ public class GluttonsBaySim {
         } else if (totalTables > MAX_TABLES) {
             totalTables = MAX_TABLES;
         }
+        
+        String[] activeCustomers = new String[totalTables];
+        String[] activeChefs = new String[chefNo];
+        String[] activeWaiters = new String[waiter];
+        for (int customer = 0; customer < totalTables; ++customer) {
+            activeCustomers[customer] = CUSTOMER_NAMES.get(customer);
+        }
+        for (int chef = 0; chef < chefNo; ++chef) {
+            activeChefs[chef] = CHEF_NAMES.get(chef);
+        }
+        for (int waiterIndex = 0; waiterIndex < waiter; ++waiterIndex) {
+            activeWaiters[waiterIndex] = WAITER_NAMES.get(waiterIndex);
+        }
         watch.start(); // start stopwatch  
-
+        System.out.println("Stopwatch has started");
+        Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
+        
+        /*
         Table[] activeTables = new Table[totalTables];
         Customer[] activeCustomers = new Customer[totalTables];
         String[] activeCustomersNames = new String[totalTables];
@@ -140,11 +155,16 @@ public class GluttonsBaySim {
             Customer customer = activeCustomer;
             exec.submit(customer);
         }
-        /*if (ver.equals("Single-Threaded Version")) {
+        
+        //COMMENT OUT
+        if (ver.equals("Single-Threaded Version")) {
             
         } else {
             watch.start(); // start stopwatch                 
-        }*/
+        }
+        
+        */
+
         System.out.println("Finished simulation after " + watch.toString());
     }
 
