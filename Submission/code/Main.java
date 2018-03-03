@@ -19,7 +19,7 @@ public class Main {
     //Number of courses per person
     public static final int COURSE_PER_PERSON = 5;
     private static final int MIN_TABLES = 1;
-    private static final int MAX_TABLES = 9;
+    private static final int MAX_TABLES = 15;
     public static final String CHEF_NAME = "Chef Cabe";
     public static final String[] LIST_OF_COURSES = {"Soup", "Salad", "Appetizer", "Main Course", "Dessert"};
     public static final HashMap<String, Integer> COOK_TIME_COURSE = new HashMap<>();
@@ -42,6 +42,12 @@ public class Main {
             add("Customer Kathleen");
             add("Customer Maxine");
             add("Customer Maureen");
+            add("Customer Andy");
+            add("Customer Sandy");
+            add("Customer Mandy");
+            add("Customer Brandy");
+            add("Customer Candy");
+            add("Customer Randy");
         }
     };
     //For future Expansion - not used yet
@@ -77,9 +83,9 @@ public class Main {
         int totalTables = scanner.nextInt();
 
         if (totalTables > MAX_TABLES) {
-            totalTables = 9;
+            totalTables = MAX_TABLES;
         } else if (totalTables < MIN_TABLES) {
-            totalTables = 1;
+            totalTables = MIN_TABLES;
         }
 
         //For version 1 and 2 chef and waiter is fixed
