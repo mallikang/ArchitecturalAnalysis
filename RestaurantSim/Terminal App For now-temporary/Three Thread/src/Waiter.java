@@ -40,7 +40,7 @@ public class Waiter implements Runnable {
                 System.out.println(waiterName + " has finished serving" + serve.getCourseName() + " to " + serve.getCustomerName());
             }
             try {
-                order = Restaurant.ordersReady.poll(2, TimeUnit.SECONDS);
+                order = Restaurant.customersOrder.poll(2, TimeUnit.SECONDS);
             } catch (InterruptedException ex) {
                 System.out.println(ex);
             }

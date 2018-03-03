@@ -53,6 +53,7 @@ public class Main {
     }; 
     
     
+ 
 
     /**
      * @param args the command line arguments
@@ -61,46 +62,10 @@ public class Main {
         //Starting as a terminal app for now - will need Scanner
         Scanner scanner = new Scanner(System.in);
         StopWatch watch = new StopWatch();
-
+ 
         //Prints to the terminal window
         System.out.println("Welcome owner to the Gluttons Bay Restaurant Simulator!");
-
-        /*
-        //get all the numbers
-        System.out.println("Please enter the number of waiters employed (minimum 1, maximum 4): ");
-        int waiter = scanner.nextInt();
-        System.out.println("Please enter the number of chefs employed(minimum 2, maximum 3): ");
-        int chefNo = scanner.nextInt();
-        System.out.println("Please enter the number of tables that are fully occupied at a time: (minimum 5, maximum 9) ");
-        int totalTables = scanner.nextInt();
-        System.out.println("Note: We have some constraints, therefore values above maximum and below minimum will be converted respectively as written above!");
-        /**
-         * *
-         * System.out.println("\nWhat version would you like to run? \n Enter 1
-         * for Single Threaded \n Enter 2 for Multi-Threaded"); int version =
-         * scanner.nextInt(); if(version >= 2){ version = 2; } else{ version=1;
-         * } String ver = "Single-Threaded Version"; if(version==2){
-         * ver="Multi-Threaded Version"; } System.out.println("You have selected
-         * the " + ver + "!"); *
-         */
-        /*
-        //ensure numbers entered are appropriate
-        if (waiter < MIN_WAITERS) {
-            waiter = MIN_WAITERS;
-        } else if (waiter > MAX_WAITERS) {
-            waiter = MAX_WAITERS;
-        }
-        if (chefNo < MIN_CHEFS) {
-            chefNo = MIN_CHEFS;
-        } else if (chefNo > MAX_CHEFS) {
-            chefNo = MAX_CHEFS;
-        }
-        if (totalTables < MIN_TABLES) {
-            totalTables = MIN_TABLES;
-        } else if (totalTables > MAX_TABLES) {
-            totalTables = MAX_TABLES;
-        }
-        */
+        
         int totalTables = 1;
         int chefNo = 1;
         int waiter = 1;
@@ -121,18 +86,8 @@ public class Main {
         System.out.println("Stopwatch has started");
         Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
         r.startDay();
-        
-        /*
-        //COMMENT OUT
-        if (ver.equals("Single-Threaded Version")) {
-            
-        } else {
-            watch.start(); // start stopwatch                 
-        }
-        
-        */
-
-        System.out.println("Finished simulation after " + watch.toString());
+ 
+        System.out.println("The day lasted " + watch.toString());
     }
 
 }

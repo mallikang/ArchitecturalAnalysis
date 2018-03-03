@@ -5,6 +5,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,10 +18,10 @@ import java.util.concurrent.Executors;
  */
 public class Restaurant {
 
-    public static BlockingQueue<Dish> ordersReady; //For Waiter to serve order that Chef has prepared
+   public static BlockingQueue<Dish> ordersReady; //For Waiter to serve order that Chef has prepared
     public static BlockingQueue<Dish> ordersSubmitted; //For Chef to work on new order that is submitted by Waiter
     public static BlockingQueue<Dish> customersOrder; //For customers waiting to place their orders
-    public static BlockingQueue<Dish> customersServed; //For customers waiting to place their orders
+    public static LinkedBlockingDeque<Dish> customersServed; //For customers waiting to place their orders
     private ArrayList<String> waiters;
     private ArrayList<String> chefs;
     private ArrayList<String> customers;
@@ -32,7 +33,7 @@ public class Restaurant {
         this.ordersReady = new ArrayBlockingQueue(waiters.length * 2); //Can only hold up to twice the number of waiters on the job
         this.ordersSubmitted = new ArrayBlockingQueue(chefs.length * 2); //Can only hold up to twice the number of chefs on the job
         this.customersOrder = new ArrayBlockingQueue(customers.length); //Can only hold up to as many customers as are present in the restaurant
-        this.customersServed = new ArrayBlockingQueue(waiters.length*2); //Can only hold up to twice the number of chefs who are serving
+        this.customersServed = new LinkedBlockingDeque(waiters.length*2); //Can only hold up to twice the number of chefs who are serving
     }
 
     public void startDay() {

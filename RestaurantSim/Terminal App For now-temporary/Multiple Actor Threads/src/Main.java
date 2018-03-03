@@ -101,7 +101,7 @@ public class Main {
             totalTables = MAX_TABLES;
         }
         */
-        int totalTables = 1;
+        int totalTables = 4;
         int chefNo = 1;
         int waiter = 1;
         

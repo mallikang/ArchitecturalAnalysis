@@ -4,16 +4,17 @@
  * and open the template in the editor.
  */
 import java.util.Random;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
  *
  * @author Adeline Chin
  */
-public class Customer implements Runnable {
+public class Customer implements Callable<String> {
 
     //2 seconds to eat
-    private final static int EAT_TIME = 2000;
+    private final static int EAT_TIME = 1000;
     private String customerName;
 
     public Customer(String customerName) {
@@ -21,7 +22,7 @@ public class Customer implements Runnable {
     }
 
     @Override
-    public void run() {
+    public String call() {
         Random random = new Random();
         int i = 0;
         while (i < Main.LIST_OF_COURSES.length) {
@@ -31,9 +32,7 @@ public class Customer implements Runnable {
             boolean served = false;
             try {
                 placed = Restaurant.customersOrder.offer(newOrder, 2, TimeUnit.SECONDS);
-            } catch (NullPointerException ex) {
-                System.out.println(ex);
-            } catch (InterruptedException ex) {
+            } catch (NullPointerException | InterruptedException ex) {
                 System.out.println(ex);
             }
             if (placed) {
@@ -57,5 +56,6 @@ public class Customer implements Runnable {
                System.out.println(ex);
             }
         }
+        return customerName;
     }
 }
