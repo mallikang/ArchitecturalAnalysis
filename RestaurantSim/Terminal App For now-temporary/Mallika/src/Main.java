@@ -121,8 +121,18 @@ public class Main {
         System.out.println("Stopwatch has started");
         Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
         r.startDay();
+        
+        /*
+        //COMMENT OUT
+        if (ver.equals("Single-Threaded Version")) {
+            
+        } else {
+            watch.start(); // start stopwatch                 
+        }
+        
+        */
 
-        System.out.println("The day lasted " + watch.toString());
+        System.out.println("Finished simulation after " + watch.toString());
     }
 
 }
