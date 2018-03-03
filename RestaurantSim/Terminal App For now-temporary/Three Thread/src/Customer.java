@@ -17,8 +17,8 @@ public class Customer implements Runnable {
     private final static int EAT_TIME = 2000;
     private String customerName;
 
-    public Customer(String customerName) {
-        this.customerName = customerName;
+    public Customer(String customers) {
+        this.customerName = customers;
     }
 
     @Override
@@ -66,11 +66,12 @@ public class Customer implements Runnable {
                     System.out.println(e);
                 }
                 System.out.println(customerName + " has finished eating " + courseName);
+
                 served = false;
                 canPlace = true;
                 ordered = false;
                 i++;
-                }
+            }
         }
     }
 }

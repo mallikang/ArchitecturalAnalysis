@@ -50,10 +50,7 @@ public class Main {
             add("Customer Maxine");
             add("Customer Maureen");
         }
-    }; 
-    
-    
- 
+    };
 
     /**
      * @param args the command line arguments
@@ -62,14 +59,20 @@ public class Main {
         //Starting as a terminal app for now - will need Scanner
         Scanner scanner = new Scanner(System.in);
         StopWatch watch = new StopWatch();
- 
+
         //Prints to the terminal window
         System.out.println("Welcome owner to the Gluttons Bay Restaurant Simulator!");
-        
-        int totalTables = 1;
+        System.out.println("Would you like to run the Subway simulation(Single-Threaded) or the Gluttons Bay Simulation(Multi-threaded)");
+
+        //For version 1 and 2 chef and waiters is fixed
         int chefNo = 1;
         int waiter = 1;
         
+        //Dummy Comment out
+        int version = 2;
+        //Get value from owner (maximum 9)
+        int totalTables = 1;
+
         String[] activeCustomers = new String[totalTables];
         String[] activeChefs = new String[chefNo];
         String[] activeWaiters = new String[waiter];
@@ -84,9 +87,13 @@ public class Main {
         }
         watch.start(); // start stopwatch  
         System.out.println("Stopwatch has started");
-        Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
-        r.startDay();
- 
+        if (version == 2) {
+            System.out.println("Welcome to Gluttons Bay!");
+            Restaurant r = new Restaurant(activeWaiters, activeChefs, activeCustomers);
+            r.startDay();
+        } else if (version == 1) {
+            System.out.println("Welcome to Subway!");
+        }
         System.out.println("The day lasted " + watch.toString());
     }
 
