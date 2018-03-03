@@ -33,7 +33,7 @@ public class Customer implements Callable<String> {
             Dish newOrder = new Dish(courseName, customerName);
             if (!ordered) {
                 try {
-                    canPlace = Restaurant.customersOrder.offer(newOrder, 2, TimeUnit.SECONDS);
+                    canPlace = Restaurant.customersOrder.offer(newOrder);
                 } catch (NullPointerException ex) {
                     System.out.println(ex);
                 } catch (InterruptedException ex) {
