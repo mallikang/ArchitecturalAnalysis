@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Jared Heidt
+ * @author mallikang.2015
  */
 public class Waiter implements Runnable {
 

@@ -4,39 +4,55 @@
  * and open the template in the editor.
  */
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Adeline Chin
  */
-public class Customer extends Thread{
-    //2 seconds to eat
-    private final static int EATING_TIME = 2000;
+public class Customer extends Thread {
 
+    //2 seconds to eat
+    private final static int EAT_TIME = 2000;
     private String customerName;
+    private boolean eating = false;
 
     public Customer(String customerName) {
         this.customerName = customerName;
     }
-    
+
     @Override
     public void run() {
-        /*String courseName = table.eat();
-
-        while (!courseName.equals("Finish")) {
-            
-            if(!courseName.equals("")){
-                System.out.println("Customer " + customerName + " is eating: " + courseName);
+        Random random = new Random();
+        for (int i = 0; i < Main.LIST_OF_COURSES.length; i++) {
+            String courseName = Main.LIST_OF_COURSES[i];
+            Dish newOrder = new Dish(courseName, customerName);
+            boolean placed = false;
+            if (!eating && !placed) {
+                try {
+                    placed = Restaurant.customersOrder.offer(newOrder, 2, TimeUnit.SECONDS);
+                } catch (NullPointerException ex) {
+                    Logger.getLogger(Waiter.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (placed) {
+                    System.out.println(customerName + " is ready to order " + courseName);
+                }
             }
-            
-            try {
-                Random random = new Random();
-                Thread.sleep(random.nextInt(EATING_TIME));
-            } catch (InterruptedException e) {
-                System.err.println(e.getMessage());
+            if (eating) {
+                System.out.println(customerName + " has now started eating " + courseName);
+                //Customer takes 2 seconds to eat the food
+                try {
+                    Thread.sleep(random.nextInt(EAT_TIME));
+                } catch (InterruptedException e) {
+                    Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, e);
+                }
+                System.out.println(customerName + " has finished eating " + courseName);
             }
-            courseName = table.eat();
-        }*/
+        }
     }
-    
+
 }

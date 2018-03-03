@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  */
 /**
  *
- * @author Adeline Chin
+ * @author mallikang.2015
  */
 public class Chef implements Runnable {
 

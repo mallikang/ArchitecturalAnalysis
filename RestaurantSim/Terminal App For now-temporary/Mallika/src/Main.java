@@ -31,7 +31,7 @@ public class Main {
             add("Chef Cade");
         }
     };
-    private static final String[] LIST_OF_COURSES = {"Soup", "Salad", "Appetizer", "Main Course", "Dessert"};
+    public static final String[] LIST_OF_COURSES = {"Soup", "Salad", "Appetizer", "Main Course", "Dessert"};
     private static final ArrayList<String> WAITER_NAMES = new ArrayList<String>() {
         {
             add("Waiter Brynn");
