@@ -35,6 +35,7 @@ public class Waiter implements Runnable {
                 //waiter takes upto 3 seconds to serve the food
                 try {
                     Thread.sleep(random.nextInt(SERVE_TIME));
+                    Restaurant.customersServed.offer(serve);
                 } catch (InterruptedException e) {
                     Logger.getLogger(Waiter.class.getName()).log(Level.SEVERE, null, e);
                 }
