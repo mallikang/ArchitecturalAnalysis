@@ -8,6 +8,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -91,16 +93,61 @@ public class Main {
         if (version == 2) {
             System.out.println("Welcome to Gluttons Bay!");
             Restaurant r = new Restaurant(activeCustomers);
+            company = "Gluttons Bay";
             watch.start(); // start stopwatch  
             System.out.println("Stopwatch has started");
             r.startDay();
-            company = "Gluttons Bay";
         } else if (version == 1) {
             System.out.println("Welcome to Subway!");
             company = "Subway";
             watch.start(); // start stopwatch  
             System.out.println("Stopwatch has started");
-
+            for(String customer : activeCustomers){
+                System.out.println(customer + " is ready to order.");
+                System.out.println(WAITER_NAME + " is now taking the order for Sub from " + customer);
+                try {
+                    Thread.currentThread().sleep(3000);
+                    System.out.println(customer + " has chosen order of Sub.");
+                    Thread.currentThread().sleep(2000);
+                    System.out.println(customer + " has chosen order of Meal.");
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
+                }
+                System.out.println(WAITER_NAME + " has placed the order for Sub from " + customer);
+                System.out.println(CHEF_NAME + " is now preparing the order for Sub from " + customer);
+                try {
+                    Thread.currentThread().sleep(1000);
+                    System.out.println(CHEF_NAME + " has cut the bread for the order of Sub for " + customer);
+                    Thread.currentThread().sleep(1000);
+                    System.out.println(CHEF_NAME + " has added cheese for the order of Sub for " + customer);
+                    Thread.currentThread().sleep(2000);
+                    System.out.println(CHEF_NAME + " has toasted the bread for the order of Sub for " + customer);
+                    Thread.currentThread().sleep(1000);
+                    System.out.println(CHEF_NAME + " has added the veggies for the order of Sub for " + customer);
+                    Thread.currentThread().sleep(1000);
+                    System.out.println(CHEF_NAME + " has added the sauce for the order of Sub for " + customer);
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
+                }
+                System.out.println(CHEF_NAME + " has finished preparing the order for Sub from " + customer);
+                System.out.println(WAITER_NAME + " is now serving " + customer + " the order for Sub.");
+                try {
+                    Thread.currentThread().sleep(5000);
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
+                }
+                System.out.println(WAITER_NAME + " has finished serving " + customer + " the order for Sub.");
+                System.out.println(customer + " has now started eating the Sub.");
+                try {
+                    Thread.sleep(5000);
+                    System.out.println(customer + " has finished half of her Sub.");
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+                System.out.println(customer + " has finished eating the Sub.");
+                System.out.println(customer + " had a good time and is now leaving the restaurant!");
+            }
         }
         System.out.println("The day at " + company + " lasted " + watch.toString());
         //In a multi-threaded version, the process is still running, despite

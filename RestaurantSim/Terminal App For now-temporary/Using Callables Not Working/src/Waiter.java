@@ -56,9 +56,20 @@ public class Waiter implements Runnable {
             }
             if (order != null) {
                 System.out.println(waiterName + " is now taking the order for " + order.getCourseName() + " from " + order.getCustomerName());
-                //waiter takes upto 2 seconds to take the order for the food
+                /* 
+                TO UNCOMMENT FOR REAL LIFE SIMULATION - Comment lines 69 to 75 if 
+                uncommenting this segment
+                //waiter takes upto 2 seconds to take and place the order
                 try {
-                    Thread.sleep(random.nextInt(SERVE_TIME));
+                    Thread.sleep(random.nextInt(2000));
+                    Restaurant.customersServed.offer(order, 2, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }*/
+                //waiter takes fixed time of 1 s to serve the food
+                try {
+                    Thread.sleep(1000);
+                    Restaurant.customersServed.offer(order, 2, TimeUnit.SECONDS);
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
