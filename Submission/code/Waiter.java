@@ -33,10 +33,8 @@ public class Waiter implements Runnable {
             }
             if (serve != null) {
                 System.out.println(waiterName + " is now serving " + serve.getCourseName() + " to " + serve.getCustomerName());
-
-                /* 
-                TO UNCOMMENT FOR REAL LIFE SIMULATION - Comment lines 43 to 48 if 
-                uncommenting this segment
+                /* //TO UNCOMMENT FOR REAL LIFE SIMULATION - Comment lines 43 to 48 if 
+                //uncommenting this segment
                 //waiter takes upto 3 seconds to serve the food
                 try {
                     Thread.sleep(random.nextInt(SERVE_TIME));
@@ -60,9 +58,8 @@ public class Waiter implements Runnable {
             }
             if (order != null) {
                 System.out.println(waiterName + " is now taking the order for " + order.getCourseName() + " from " + order.getCustomerName());
-                /* 
-                TO UNCOMMENT FOR REAL LIFE SIMULATION - Comment lines 69 to 75 if 
-                uncommenting this segment
+                /* //TO UNCOMMENT FOR REAL LIFE SIMULATION - Comment lines 69 to 75 if 
+                //uncommenting this segment
                 //waiter takes upto 2 seconds to take and place the order
                 try {
                     Thread.sleep(random.nextInt(2000));

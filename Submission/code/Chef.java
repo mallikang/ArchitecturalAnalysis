@@ -34,9 +34,8 @@ public class Chef implements Runnable {
                 System.out.println(ex);
             }
             System.out.println(chefName + " is now preparing " + prepare.getCourseName() + " for " + prepare.getCustomerName());
-            /* 
-            TO UNCOMMENT FOR REAL LIFE SIMULATION - Comment lines 42 to 48 if 
-            uncommenting this segment
+            /* //TO UNCOMMENT FOR REAL LIFE SIMULATION - Comment lines 42 to 48 if 
+            //uncommenting this segment
             //chef takes anywhere between 2 to 4.5 seconds to prepare the food
             try {
                 Thread.sleep(random.nextInt(COOK_TIME));
