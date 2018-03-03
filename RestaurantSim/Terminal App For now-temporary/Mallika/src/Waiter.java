@@ -1,53 +1,65 @@
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Jared Heidt
  */
-public class Waiter{
-/*
-    private final static int MAX_CUSTOMER_MILLIS = 6000;// must wait for between 0-4 seconds
+public class Waiter implements Runnable {
 
-    private Table[] tables;
     private String waiterName;
-    private String[] customerNames;
-    private String[][] courses;
+    private boolean terminate = false;
+    private final Integer SERVE_TIME = 3000;
 
-    /**
-     * initializes the data members of the class
-     *
-     * @param tables array of Table objects this Waiter waits on
-     * @param waiterName name of the waiter
-     * @param customerNames names of Customers served by the Waiter
-     */
-/*    public Waiter(Table[] tables, String waiterName, String[] customerNames, String[][] courses) {
-        this.tables = tables;
-        this.waiterName = waiterName;
-        this.customerNames = customerNames;
-        this.courses = courses;
+    public Waiter(String name) {
+        this.waiterName = name;
     }
 
-    /**
-     * For each customer, a thread on this Waiter object serves the three
-     * courses in the correct order by calling the serve() method in the
-     * corresponding Table, prints out what course is served to which Customer,
-     * and sleeps for a random time between 0 & 4 seconds to mimic time taken in
-     * serving.
-     */
-/*    public void makeServe() throws InterruptedException {
-        synchronized (r) {
-            r.notifyAll();
-            while(r.orderMadeByClient==false)
-                r.wait();
-            System.out.println("Start serving order ");
-            Thread.sleep(1000);
-            r.putOrder(r.getOrderMadeByClient());
-            while(r.orderReady==false)
-                r.wait();
-            r.putOrderReceived(r.getFood());   
-            System.out.println("End serving order ");
-        }
-    }*/
+    @Override
+    public void run() {
+        Random random = new Random();
+        Dish serve = null;
+        Dish order = null;
+        while (!terminate) {
+            try {
+                serve = Restaurant.ordersReady.poll(2, TimeUnit.SECONDS);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Waiter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (serve != null) {
+                System.out.println(waiterName + " is now serving" + serve.getCourseName() + " to " + serve.getCustomerName());
 
+                //waiter takes upto 3 seconds to serve the food
+                try {
+                    Thread.sleep(random.nextInt(SERVE_TIME));
+                } catch (InterruptedException e) {
+                    Logger.getLogger(Waiter.class.getName()).log(Level.SEVERE, null, e);
+                }
+                System.out.println(waiterName + " has finished serving" + serve.getCourseName() + " to " + serve.getCustomerName());
+            }
+            try {
+                order = Restaurant.ordersReady.poll(2, TimeUnit.SECONDS);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Waiter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (order != null) {
+                System.out.println(waiterName + " is now taking the order for " + order.getCourseName() + " from " + order.getCustomerName());
+                //waiter takes upto 2 seconds to take the order for the food
+                try {
+                    Thread.sleep(random.nextInt(SERVE_TIME));
+                } catch (InterruptedException e) {
+                    Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, e);
+                }
+                try {
+                    Restaurant.ordersSubmitted.offer(order);
+                } catch (NullPointerException ex) {
+                    Logger.getLogger(Waiter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println(waiterName + " has placed the order for " + order.getCourseName() + " from " + order.getCustomerName());
+            }
+        }
+    }
 }

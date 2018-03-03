@@ -9,19 +9,19 @@
  * @author mallikang.2015
  */
 public class Dish {
-    private static String courseName;
-    private static String customerName;
+    private String courseName;
+    private String customerName;
     
     public Dish(String courseName, String customerName){
         this.courseName = courseName;
         this.customerName = customerName;
     }
     
-    public static String getCourseName(){
+    public String getCourseName(){
         return courseName;
     }
     
-    public static String getCustomerName(){
+    public String getCustomerName(){
         return customerName;
     }
 }

@@ -18,7 +18,7 @@ public class Chef implements Runnable {
     private boolean terminate = false;
     private final Integer COOK_TIME = 4500;
 
-    public Chef(String name, boolean terminate) {
+    public Chef(String name) {
         this.chefName = name;
     }
 
@@ -32,14 +32,14 @@ public class Chef implements Runnable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println(chefName + " is now preparing " + Dish.getCourseName() + " for " + Dish.getCustomerName());
-            //chef waits for anywhere between 2 to 4.5 seconds to prepare the food
+            System.out.println(chefName + " is now preparing " + prepare.getCourseName() + " for " + prepare.getCustomerName());
+            //chef takes anywhere between 2 to 4.5 seconds to prepare the food
             try {
                 Thread.sleep(random.nextInt(COOK_TIME));
             } catch (InterruptedException e) {
                 Logger.getLogger(Chef.class.getName()).log(Level.SEVERE, null, e);
             }
-            System.out.println(chefName + " has finished preparing " + Dish.getCourseName() + " for " + Dish.getCustomerName());
+            System.out.println(chefName + " has finished preparing " + prepare.getCourseName() + " for " + prepare.getCustomerName());
             try {
                 Restaurant.ordersReady.offer(prepare);
             } catch (NullPointerException ex) {
